@@ -169,7 +169,7 @@ public class WeddingTables {
             table1Index++;
         }
 
-        //the loop is now over. We relaunch the process if we improvements were still being reached.
+        //the loop is now over. We relaunch the process if we find that improvements were still being reached less than n permutations ago.
         if (timeSinceLastImprovement < Math.min(permutationsCounter, maxNumberOfIterationsWithoutImprovement)) {
             permuteGuests();
         }
