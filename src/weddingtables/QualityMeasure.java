@@ -55,6 +55,7 @@ public class QualityMeasure<T> {
                 qualityPairGuests = map.get(pairOfGuests);
 
                 //check: in the case where there is no similarity at all between two guests, their pair won't appear in the map of similarities
+                //that's OK: in this case we assume the similarity to be zero (could actually be the average or mean of known similarities, but hey...)
                 if (qualityPairGuests != null) {
                     qualityInTable = qualityInTable + qualityPairGuests;
                 }

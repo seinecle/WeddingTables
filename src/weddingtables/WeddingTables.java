@@ -7,7 +7,6 @@ package weddingtables;
 import IO.ExportResultsToScreen;
 import IO.ImportMapSimilarities;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -17,11 +16,29 @@ import java.util.Set;
 /**
  *
  * @author C. Levallois
+ * www.clementlevallois.net
+ * 
+ * Let's imagine we have 180 guests at a wedding.
+ * 
+ * How to group them in tables to maximize the similar between guests for each table? (let's assume that's desirable!)
+ * 
+ * => This algorithm takes a size of table (sitsPerTable), and similarities between all guests (mapSmilarities), as inputs
+ * 
+ * => It returns a list of tables with guests sited in a way that maximizes the similarity per table
+ * 
+ * 
+ * Thanks to @vtraag for providing the logic of this clustering technique.
+ * 
+ * 
  */
 public class WeddingTables {
 
     private static Set<Integer> guests;
     private static Map<String, Float> mapSimilarities;
+    //what is mapSmilarities?
+    //the String is a pair of guests, comma separated. Such as: "1,2" for the pair of guests 1 and 2
+    // the Float value is their similarity, as provided externally (not determined here).
+    
     private static List<Set<Integer>> tables;
     private static Set<Integer> table;
     private static int sitsPerTable = 3;
@@ -53,7 +70,7 @@ public class WeddingTables {
         //computation of the quality of this first distribution
         qm.computeGlobalQuality(tables, mapSimilarities);
 
-        //start of the permutations of pairs of guest, until the quality stops improving
+        //start of the permutations of pairs of guests, until the quality stops improving
         permuteGuests();
 
         //export the results to screen
@@ -128,7 +145,7 @@ public class WeddingTables {
                     qualityOriginalTable2 = qm.computeQualityInATable(table2, mapSimilarities);
                     setIterator2 = table2.iterator();
 
-                    //looping through the guests of the current table of the remaining tables
+                    //looping through the guests of the current remaining table
                     while (setIterator2.hasNext()) {
                         guest2 = setIterator2.next();
 
